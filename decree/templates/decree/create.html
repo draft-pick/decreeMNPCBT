@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    <div class="page-intro single-col-max mx-auto"><i class="fa-solid fa-right-long"></i></div>
+    <li>
+        <div class="page-intro single-col-max mx-auto">{{ title }}</div>
+    </li>
+{% endblock %}
+{% block content %}
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8 offset-md-2">
+                    <form method="post"
+                          enctype="multipart/form-data"
+                          action="{% url 'decree:decree_create' %}">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group row my-3">
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                    {% if field.field.required %}
+                                        <span class="required text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
+                                        {{ field.help_text|safe }}
+                                    </small>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">
+                                    Добавить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

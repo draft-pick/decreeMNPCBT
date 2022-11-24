@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block breadcrumbs %}
+    {{ block.super }}
+    <div class="page-intro single-col-max mx-auto"><i class="fa-solid fa-right-long"></i></div>
+    <li>
+        <div class="page-intro single-col-max mx-auto">{{ dec.title }}</div>
+    </li>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="callout-block callout-block-success">
+                    <div class="content">
+                        <h4 class="callout-title">
+	                                <span class="callout-icon-holder me-1">
+		                                <i class="fas fa-info-circle"></i>
+		                            </span>
+                            {{ dec.title }}
+                        </h4>
+                    </div>
+                </div>
+                <div class="callout-block callout-block-success">
+                    <div class="content">
+                        <h4 class="callout-title">
+	                                <span class="callout-icon-holder me-1">
+		                                №
+		                            </span>
+                            {{ dec.number }}
+                        </h4>
+                    </div>
+                </div>
+                <div class="callout-block callout-block-success">
+                    <div class="content">
+                        <h4 class="callout-title">
+	                                <span class="callout-icon-holder me-1">
+		                                <i class="fa-solid fa-calendar"></i>
+		                            </span>
+                            {{ dec.pub_date }}
+                        </h4>
+                    </div>
+                </div>
+                <div class="callout-block callout-block-success">
+                    <div class="content">
+                        <h4 class="callout-title">
+	                                <span class="callout-icon-holder me-1">
+		                               <i class="fa-sharp fa-solid fa-rectangle-history"></i>
+		                            </span>
+                            {{ dec.type }}
+                        </h4>
+                    </div>
+                </div>
+                <div class="callout-block callout-block-success">
+                    <div class="content">
+                        <h4 class="callout-title">
+	                                <span class="callout-icon-holder me-1">
+		                               <i class="fa-solid fa-user-large"></i>
+		                            </span>
+                            {{ dec.author.first_name }} {{ dec.author.last_name }}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                {% if dec.decree %}
+                    {{ dec.decree.title }}
+                {% else %}
+                    no!
+                {% endif %}
+
+                {% for d in dec.main_decree.all %}
+                    {{ d.title }}
+                {% endfor %}
+                <div>
+                    <a href="{% url 'decree:decree_changed_create' dec.pk %}">Внести изменения</a>
+                </div>
+            </div>
+        </div>
+        <iframe src="{{ dec.file.url }}" width="100%" height="600"></iframe>
+    </div>
+{% endblock %}
